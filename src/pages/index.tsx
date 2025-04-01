@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <div className="text-black flex flex-col items-center justify-center min-h-screen">
-        <div className="w-[900px] p-5 h-[600px] rounded-2xl bg-[#fff] flex flex-row justify-center">
+        <div className="w-[1000px] p-5 h-[600px] rounded-2xl bg-[#fff] flex flex-row justify-center">
           <div
             className="flex flex-col"
             style={{
@@ -42,12 +42,12 @@ export default function Home() {
                 onClick={() => HandleStepChanger(id)}
               >
                 <div className="flex flex-row gap-1">
-                  <div className="rounded-full border-[1px] m-4 border-white w-5 h-5 flex items-center justify-center p-5">
+                  <div className="rounded-full border-[1px] m-4 text-white border-white w-5 h-5 flex items-center justify-center p-5">
                     <h1>{id}</h1>
                   </div>
                   <div className="flex flex-col items-start justify-center">
                     <p
-                      className="text-[#cecece] font-thin"
+                      className="text-[#cecece] text-[12px] font-thin"
                       style={{
                         fontFamily:
                           "Ubuntu-Regular, Arial, Helvetica, sans-serif",
@@ -63,29 +63,31 @@ export default function Home() {
           </div>
 
           {/* content */}
-
-          {stChanger.map((item) => {
-        
-            return (
-              <>
-                {item.id === 1 && item.Stat ? (
-                  <>
-                    <Personalinfo />
-                  </>
-                ) : item.id === 2 && item.Stat ? (
-                  <><Planselection/></>
-                ) : 
-                  item.id === 3 && item.Stat ? (
-                    <><Addons/></>
+            {stChanger.map((item) => {
+              return (
+                <>
+                  {item.id === 1 && item.Stat ? (
+                    <>
+                      <Personalinfo />
+                    </>
+                  ) : item.id === 2 && item.Stat ? (
+                    <>
+                      <Planselection />
+                    </>
+                  ) : item.id === 3 && item.Stat ? (
+                    <>
+                      <Addons />
+                    </>
                   ) : item.id === 4 && item.Stat ? (
-                    <><Summary/></>
-                  ) : <>No Stats found</>
-                }
-              </>
-            );
-          })}
-
-          {/* <button onCanPlay={() => HandleStepChanger}>Submit</button> */}
+                    <>
+                      <Summary />
+                    </>
+                  ) : (
+                    <>No Stats found</>
+                  )}
+                </>
+              );
+            })}
         </div>
       </div>
     </>

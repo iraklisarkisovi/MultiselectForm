@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: hsl(231, 11%, 63%);
+  --foreground: #9699ab;
 }
 
 @theme inline {

@@ -1,6 +1,24 @@
-import React from 'react'
+import { HandlePersonalInfo } from '@/statemanagement/slice';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 const Personalinfo = () => {
+  const dispatch = useDispatch()
+  const [personalinfo, setPersonalinfo] = useState({
+    Name: "",
+    EmailAdress: "",
+    PhoneNumber: "",
+  });
+  
+  const Handling = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPersonalinfo({ ...personalinfo, [e.target.name]: e.target.value});
+  
+  };
+
+  const HandleSliceChanger = () => {
+      dispatch(HandlePersonalInfo(personalinfo));
+  }
+
   return (
     <>
       <div className="flex ml-auto mr-auto flex-col items-center justify-evenly">
@@ -27,19 +45,37 @@ const Personalinfo = () => {
             fontFamily: "Ubuntu-Regular, Arial, Helvetica, sans-serif",
           }}
         >
-          {["Name", "Email Adress", "Phone Number"].map((item) => (
+          {[
+            { name: "Name", placehold: " e.g. Stephen King" },
+            { name: "Email Adress", placehold: "e.g. stephenking@lorem.com" },
+            { name: "Phone Number", placehold: "e.g. +1 234 567 890" },
+          ].map((item) => (
             <>
               <div className="flex flex-col items-start">
-                <label>{item}</label>
+                <label>{item.name}</label>
                 <input
+                  name={item.name.split(" ").join("")}
+                  value={personalinfo[item.name as keyof typeof personalinfo]}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    Handling(e)
+                  }
                   type="text"
-                  placeholder={"Write your " + item}
+                  placeholder={item.placehold}
                   className="font-thin bg-[#fff] border-[1px] border-[#c9c9c9] p-[10px] w-[400px] rounded-[10px] focus:border-[#9500da] focus:outline-none"
                 />
               </div>
             </>
           ))}
         </form>
+        <button
+          className="flex text-[15px] items-center justify-center text-white text-center bg-[#473dff] w-[110px] h-[50px] rounded-[8px]"
+          onClick={HandleSliceChanger}
+          style={{
+            fontFamily: "Ubuntu-Medium, Arial, Helvetica, sans-serif",
+          }}
+        >
+          Next step
+        </button>
       </div>
     </>
   );
