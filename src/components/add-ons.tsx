@@ -21,8 +21,8 @@ const AddOnMap = [
 const Addons = () => {
   return (
     <>
-      <div className="flex ml-auto mb-18 mr-65 flex-col items-center justify-evenly">
-        <div className="flex flex-col items-start gap-2 mr-10">
+      <div className="flex flex-col items-start justify-baseline gap-15 mr-6 h-[400px] w-full">
+        <div className="flex flex-col items-start gap-2 mr-10 mt-3">
           <h1
             className="text-3xl font-bold text-[#02295a]"
             style={{ fontFamily: "Ubuntu, Arial, Helvetica, sans-serif" }}
@@ -40,7 +40,7 @@ const Addons = () => {
         </div>
         <div className="flex flex-col items-start justify-center gap-5 h-[200px] w-[350px]">
           {AddOnMap.map((item) => (
-            <button className="w-[470px] p-5 border-[2px] border-purple-400 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl">
+            <button className="w-[470px] p-3 border-[2px] border-purple-400 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl">
               <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-row gap-5 text-start items-center justify-center">
                   <input type="checkbox" className="w-10 h-5" />

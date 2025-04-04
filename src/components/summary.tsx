@@ -3,7 +3,7 @@ import React from 'react'
 const Summary = () => {
   return (
     <>
-      <div className="flex ml-auto mb-18 mr-65 flex-col items-center justify-evenly">
+      <div className="flex ml-auto mb-18 mr-65 flex-col items-center justify-evenly gap-10 h-[400px] bg-amber-400 w-full">
         <div className="flex flex-col items-start gap-2">
           <h1
             className="text-3xl font-bold text-[#02295a]"

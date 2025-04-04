@@ -7,7 +7,7 @@ const Planselection = () => {
   return (
     <>
       <div
-        className="flex ml-auto mr-auto flex-col items-start justify-evenly"
+        className="flex ml-auto mr-auto flex-col items-start justify-evenly gap-10 h-[400px] w-full"
         style={{ fontFamily: "Ubuntu-Regular" }}
       >
         <div className="flex flex-col items-start ml-10">

@@ -3,7 +3,9 @@ import Addons from "@/components/add-ons";
 import Personalinfo from "@/components/personalinfo";
 import Planselection from "@/components/planselection";
 import Summary from "@/components/summary";
+import { HandleStatusChange, RootState } from "@/statemanagement/slice";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Steps = [
   { name: "YOUR INFO", id: 1 },
@@ -13,15 +15,42 @@ const Steps = [
 ];
 
 export default function Home() {
-  const [stChanger, setStChanger] = useState<{Stat: boolean, id: number}[]>([
-    { Stat: true, id: 1 },
-  ]);
-  console.log(stChanger)
+  const dispatch = useDispatch()
+  const stChanger = useSelector((state: RootState) => state.Stat.Status)
+  const [currentelememt, setCurrentElement] = useState<Number>()
 
-  const HandleStepChanger = (id: number) => {
-    setStChanger((prev: any) => [{id: id, Stat: !prev.Stat}])
-    console.log(stChanger)
-  }
+  const HandlePrevSlice = (currentId: number) => {
+    const condition = () => {
+     while (currentId !== 1){
+      if(currentId === 1){
+        return currentId + 3
+      }
+      return currentId -= 1
+     }
+     return currentId
+    }
+
+    setCurrentElement(condition());
+    console.log(currentelememt)
+
+    dispatch(HandleStatusChange({ id: condition(), Stat: true }));
+  };
+
+  const HandleNextSlice = (currentId: number) => {
+    const condition = () => {
+      while(currentId === 4){
+        return 1
+      }
+      return currentId + 1
+    }
+
+    setCurrentElement(condition())
+
+    dispatch(
+      HandleStatusChange({ id: condition(), Stat: true })
+    );
+  };
+  
 
   return (
     <>
@@ -37,12 +66,15 @@ export default function Home() {
               <Background />
             </div>
             {Steps.map(({ name, id }) => (
-              <div
-                className="flex flex-col ml-5 mt-2 items-start justify-center z-20 gap-5"
-                onClick={() => HandleStepChanger(id)}
-              >
+              <div className="flex flex-col ml-5 mt-2 items-start justify-center z-20 gap-5">
                 <div className="flex flex-row gap-1">
-                  <div className="rounded-full border-[1px] m-4 text-white border-white w-5 h-5 flex items-center justify-center p-5">
+                  <div
+                    className={`rounded-full border-[1px] m-4 ${
+                      currentelememt === id
+                        ? "bg-[#bfe2fd] text-gray-600"
+                        : "text-white"
+                    } border-white w-5 h-5 flex items-center justify-center p-5`}
+                  >
                     <h1>{id}</h1>
                   </div>
                   <div className="flex flex-col items-start justify-center">
@@ -63,6 +95,7 @@ export default function Home() {
           </div>
 
           {/* content */}
+          <div className="flex flex-col mx-auto my-auto items-center justify-center">
             {stChanger.map((item) => {
               return (
                 <>
@@ -88,6 +121,30 @@ export default function Home() {
                 </>
               );
             })}
+
+            {stChanger.map(({ id }) => (
+              <div className="flex flex-row items-center justify-center mt-8">
+                <button
+                  className="flex text-[15px] cursor-pointer items-center justify-center text-gray-600 hover:text-[#696969] text-center"
+                  onClick={() => HandlePrevSlice(id)}
+                  style={{
+                    fontFamily: "Ubuntu-Medium, Arial, Helvetica, sans-serif",
+                  }}
+                >
+                  Go Back
+                </button>
+                <button
+                  className="flex text-[15px] ml-66 cursor-pointer transition-all hover:bg-[#473dffe0] items-center justify-center text-white text-center bg-[#473dff] w-[110px] h-[50px] rounded-[8px]"
+                  onClick={() => HandleNextSlice(id)}
+                  style={{
+                    fontFamily: "Ubuntu-Medium, Arial, Helvetica, sans-serif",
+                  }}
+                >
+                  Next step
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
