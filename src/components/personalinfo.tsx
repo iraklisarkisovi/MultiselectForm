@@ -1,24 +1,22 @@
 import {
   HandlePersonalInfo,
-  HandleStatusChange,
+  HandleRulerAddress,
   RootState,
 } from "@/statemanagement/slice";
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const Personalinfo = () => {
   const dispatch = useDispatch()
 
-  const initial = useSelector((state: RootState) => state.Stat.Status)
-  const [personalinfo, setPersonalinfo] = useState({
-    Name: "",
-    EmailAdress: "",
-    PhoneNumber: "",
-  });
-  
+  const Initial = useSelector((state: RootState) => state.Stat)  
+
   const Handling = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalinfo({ ...personalinfo, [e.target.name]: e.target.value});
-  
+    dispatch(HandleRulerAddress(1));
+    if (Initial.Ruler.Adress === 1) {
+      dispatch(HandlePersonalInfo({[e.target.name]: e.target.value }));
+      console.log(Initial.PresonalInf)
+    }
   };
 
   return (
@@ -48,7 +46,7 @@ const Personalinfo = () => {
           }}
         >
           {[
-            { name: "Name", placehold: " e.g. Stephen King" },
+            { name: "Name", placehold: "e.g. Stephen King" },
             { name: "Email Adress", placehold: "e.g. stephenking@lorem.com" },
             { name: "Phone Number", placehold: "e.g. +1 234 567 890" },
           ].map((item) => (
@@ -57,7 +55,11 @@ const Personalinfo = () => {
                 <label>{item.name}</label>
                 <input
                   name={item.name.split(" ").join("")}
-                  value={personalinfo[item.name as keyof typeof personalinfo]}
+                  value={
+                    Initial.PresonalInf[
+                      item.name as keyof typeof Initial.PresonalInf
+                    ]
+                  }
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     Handling(e)
                   }
