@@ -28,19 +28,19 @@ const Addons = () => {
   const dispatch = useDispatch()
   const Initial = useSelector((state: RootState) => state.Stat);  
 
-const HandleAdd = (Chosen: number) => {
-  setCond((prevCond) => {
-    const newCond = !prevCond;
+  const HandleAdd = (Chosen: number) => {
+    setCond((prevCond) => {
+      const newCond = !prevCond;
 
-    const updatedAddon = newCond
-      ? [...Initial.Addon, Chosen]
-      : Initial.Addon.filter((item) => item !== Chosen); 
+      const updatedAddon = newCond
+        ? [...Initial.Addon, Chosen]
+        : Initial.Addon.filter((item) => item !== Chosen); 
 
-    dispatch(HandleAddon(updatedAddon));
+      dispatch(HandleAddon(updatedAddon));
 
-    return newCond;
-  });
-};
+      return newCond;
+    });
+  };
 
   
   return (

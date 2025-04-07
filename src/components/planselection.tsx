@@ -1,8 +1,20 @@
 import React, { useState } from 'react'
 import { Advanced, Arcade, Pro } from './Icons&more/svgs';
+import { useDispatch } from 'react-redux';
+import { HandlePlan } from '@/statemanagement/slice';
 
 const Planselection = () => {
-  const [payment, setPayment] = useState(false)
+  const [payment, setPayment] = useState(false);
+  const dispatch = useDispatch();
+
+  const Handle = (plan: {name: string, plan: string}) => {
+    dispatch(
+      HandlePlan({
+        ...plan,
+        paymentperiod: payment ? "yearly" : "monthly",
+      })
+    );
+  }
 
   return (
     <>
@@ -31,6 +43,7 @@ const Planselection = () => {
             <button
               key={index}
               className="flex flex-col text-start items-start justify-end gap-10 p-5 w-[140px] h-[180px] border transition-all border-zinc-500 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl"
+              onClick={() => Handle({name: name, plan: plan})}
             >
               <div>
                 {name === "Arcade" ? (

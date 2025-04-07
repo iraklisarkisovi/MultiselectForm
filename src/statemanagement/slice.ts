@@ -2,10 +2,6 @@ import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
 
 
 type inititaltype = {
-  Ruler: {
-    Status: boolean
-    Adress: number
-  },
   Status: [{
     Stat: boolean;
     id: number;
@@ -16,14 +12,11 @@ type inititaltype = {
     email: string;
     phonenumber: string;
   };
-  Addon: number[]
+  Addon: number[],
+  Plan: { name: string; plan: string; paymentperiod: string}
 };
 
 const initialState: inititaltype = {
-  Ruler: {
-    Status: false,
-    Adress: 0,
-  },
   Status: [
     {
       Stat: true,
@@ -37,6 +30,11 @@ const initialState: inititaltype = {
     phonenumber: "",
   },
   Addon: [],
+  Plan: {
+    name: "",
+    plan: "", 
+    paymentperiod: ""
+  }
 };
 
 const ReduxSlice = createSlice({
@@ -51,20 +49,20 @@ const ReduxSlice = createSlice({
     HandleStatusChange: (state, action) => {
       state.Status = [action.payload];
     },
-    HandleRuler: (state) => {
-      state.Ruler.Status = !state.Ruler.Status;
-    },
     HandleAddon: (state, action: PayloadAction<number[]>) => {
       state.Addon = action.payload;
     },
-    HandleRulerAddress: (state, action) => {
-      state.Ruler.Adress = action.payload;
+    HandlePlan: (
+      state,
+      action: PayloadAction<{ name: string; plan: string; paymentperiod: string}>
+    ) => {
+      state.Plan = action.payload;
     },
   },
 });
 
 export const redu = ReduxSlice.reducer
-export const { HandlePersonalInfo, HandleAddon, HandleRulerAddress, HandleRuler, HandleStatusChange } = ReduxSlice.actions;
+export const { HandlePersonalInfo, HandleAddon, HandlePlan, HandleStatusChange } = ReduxSlice.actions;
 
 export const store = configureStore({
   reducer: {

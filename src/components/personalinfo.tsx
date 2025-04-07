@@ -1,6 +1,5 @@
 import {
   HandlePersonalInfo,
-  HandleRulerAddress,
   RootState,
 } from "@/statemanagement/slice";
 import React from 'react'
@@ -12,11 +11,7 @@ const Personalinfo = () => {
   const Initial = useSelector((state: RootState) => state.Stat)  
 
   const Handling = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(HandleRulerAddress(1));
-    if (Initial.Ruler.Adress === 1) {
-      dispatch(HandlePersonalInfo({[e.target.name]: e.target.value }));
-      console.log(Initial.PresonalInf)
-    }
+    dispatch(HandlePersonalInfo({[e.target.name]: e.target.value }));
   };
 
   return (

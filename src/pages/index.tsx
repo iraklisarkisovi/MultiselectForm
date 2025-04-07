@@ -3,8 +3,8 @@ import Addons from "@/components/add-ons";
 import Personalinfo from "@/components/personalinfo";
 import Planselection from "@/components/planselection";
 import Summary from "@/components/summary";
-import { HandleRuler, HandleStatusChange, RootState } from "@/statemanagement/slice";
-import { useEffect, useState } from "react";
+import { HandleStatusChange, RootState } from "@/statemanagement/slice";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Steps = [
@@ -45,12 +45,6 @@ export default function Home() {
     }
 
     setCurrentElement(condition())
-    dispatch(HandleRuler());
-
-    setTimeout(() => {
-      dispatch(HandleRuler());
-    }, 1000)
-
     dispatch(
       HandleStatusChange({ id: condition(), Stat: true })
     );
