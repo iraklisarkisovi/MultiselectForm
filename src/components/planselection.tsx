@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { Advanced, Arcade, Pro } from './Icons&more/svgs';
-import { useDispatch } from 'react-redux';
-import { HandlePlan } from '@/statemanagement/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { HandlePlan, RootState } from '@/statemanagement/slice';
 
 const Planselection = () => {
-  const [payment, setPayment] = useState(false);
+  const [payment, setPayment] = useState(true);
   const dispatch = useDispatch();
+  const Initial = useSelector((state: RootState) => state.Stat);
 
-  const Handle = (plan: {name: string, plan: string}) => {
+
+  const Handle = (plan: { name: string; plan: string; price: number }) => {
     dispatch(
       HandlePlan({
         ...plan,
         paymentperiod: payment ? "yearly" : "monthly",
       })
     );
-  }
+  };
 
   return (
     <>
@@ -33,17 +35,18 @@ const Planselection = () => {
           <p className="text-[#9699ab] text-sm">
             You have the option of monthly or yearly billing.
           </p>
+          <h1 className="font-bold mt-3">Chosen plan: {Initial.Plan.name}</h1>
         </div>
         <div className="flex flex-row items-center ml-10 justify-center gap-6">
           {[
-            { name: "Arcade", plan: "$9/mo" },
-            { name: "Advanced", plan: "$12/mo" },
-            { name: "Pro", plan: "$15/mo" },
-          ].map(({ name, plan }, index) => (
+            { name: "Arcade", plan: "$9/mo", price: 9 },
+            { name: "Advanced", plan: "$12/mo", price: 12 },
+            { name: "Pro", plan: "$15/mo", price: 15 },
+          ].map(({ name, plan, price }, index) => (
             <button
               key={index}
               className="flex flex-col text-start items-start justify-end gap-10 p-5 w-[140px] h-[180px] border transition-all border-zinc-500 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl"
-              onClick={() => Handle({name: name, plan: plan})}
+              onClick={() => Handle({ name: name, plan: plan, price: price })}
             >
               <div>
                 {name === "Arcade" ? (

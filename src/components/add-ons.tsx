@@ -8,18 +8,21 @@ export const AddOnMap = [
     desc: "Online service Access to multiplayer games",
     payment: "+$1/mo",
     id: 1,
+    price: 1,
   },
   {
     name: "Larger storage",
     desc: "Extra 1TB of cloud save",
     payment: "+$2/mo",
     id: 2,
+    price: 2,
   },
   {
     name: "Customizable Profile",
     desc: "Custom theme on your profile",
     payment: "+$2/mo",
     id: 3,
+    price: 2,
   },
 ];
 
@@ -28,13 +31,18 @@ const Addons = () => {
   const dispatch = useDispatch()
   const Initial = useSelector((state: RootState) => state.Stat);  
 
-  const HandleAdd = (Chosen: number) => {
+  const HandleAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const val = Number(e.target.value)
+    console.log(val)
+
     setCond((prevCond) => {
       const newCond = !prevCond;
 
       const updatedAddon = newCond
-        ? [...Initial.Addon, Chosen]
-        : Initial.Addon.filter((item) => item !== Chosen); 
+        ? [...Initial.Addon, val]
+        : Initial.Addon.filter((item) => item !== val);
 
       dispatch(HandleAddon(updatedAddon));
 
@@ -64,12 +72,18 @@ const Addons = () => {
         </div>
         <div className="flex flex-col items-start justify-center gap-5 h-[200px] w-[350px]">
           {AddOnMap.map((item) => (
-            <button
-              className="w-[470px] p-4 border-[2px] border-purple-400 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl"
-            >
+            <button className="w-[470px] p-4 border-[2px] border-purple-400 focus:bg-[#fbf5ff] focus:border-purple-600 rounded-xl">
               <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-row gap-5 text-start items-center justify-center">
-                  <input type="checkbox" className="w-10 h-5" onChange={() => HandleAdd(item.id)}/>
+                  <input
+                    type="checkbox"
+                    checked={Initial.Addon.includes(item.id)}
+                    value={String(item.id)}
+                    className="w-10 h-5"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      HandleAdd(e)
+                    }
+                  />
                   <div>
                     <h1 className="text-[15px] font-bold text-[#02295a]">
                       {item.name}

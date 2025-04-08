@@ -2,18 +2,20 @@ import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
 
 
 type inititaltype = {
-  Status: [{
-    Stat: boolean;
-    id: number;
-    Name: string
-  }];
+  Status: [
+    {
+      Stat: boolean;
+      id: number;
+      Name: string;
+    }
+  ];
   PresonalInf: {
     name: string;
     email: string;
     phonenumber: string;
   };
-  Addon: number[],
-  Plan: { name: string; plan: string; paymentperiod: string}
+  Addon: number[];
+  Plan: { name: string; plan: string; paymentperiod: string; price: number};
 };
 
 const initialState: inititaltype = {
@@ -33,6 +35,7 @@ const initialState: inititaltype = {
   Plan: {
     name: "",
     plan: "", 
+    price: 0,
     paymentperiod: ""
   }
 };
@@ -54,7 +57,7 @@ const ReduxSlice = createSlice({
     },
     HandlePlan: (
       state,
-      action: PayloadAction<{ name: string; plan: string; paymentperiod: string}>
+      action: PayloadAction<{paymentperiod: string; name: string; plan: string; price: number}>
     ) => {
       state.Plan = action.payload;
     },
